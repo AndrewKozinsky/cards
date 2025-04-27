@@ -1,5 +1,5 @@
 import React from 'react'
-import PageWrapper from '../../../component/pagesRelated/PageWrapper/PageWrapper'
+import PageWrapper from '../../../components/pagesRelated/PageWrapper/PageWrapper'
 import { routeNames } from '../../../config/routeNames'
 
 function MainPage() {

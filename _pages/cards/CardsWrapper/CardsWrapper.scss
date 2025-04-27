@@ -1,0 +1,12 @@
+.cards-wrapper {
+	display: flex;
+	gap: 1.6rem;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.cards-wrapper__error {
+	display: flex;
+	align-items: center;
+	gap: 2rem;
+}

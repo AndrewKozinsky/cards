@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import RefetchCardsButton from '../../../../components/cards/RefetchCardsButton/RefetchCardsButton'
 import { routeNames } from '../../../../config/routeNames'
 import './MainHeader.scss'
 
@@ -18,6 +19,7 @@ function MainHeader() {
 					</Link>
 				</li>
 			</ul>
+			<RefetchCardsButton />
 		</header>
 	)
 }
