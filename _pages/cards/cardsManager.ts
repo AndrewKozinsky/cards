@@ -4,25 +4,39 @@ import { cardsConfig } from './cardsConfig'
 import { CardInStore, FullCardInStore, useCardsStore } from './cardsStore'
 
 class CardsManager {
-	fetchCards() {
-		useCardsStore.setState({ cards: null, status: 'loading' })
+	fetchCards = () => {
+		useCardsStore.getState().updateStatus('loading')
+		useCardsStore.getState().updateCards(null)
 
 		cardsRequests.getCards().then((data) => {
 			if ('error' in data) {
-				useCardsStore.setState({ cards: null, status: 'error' })
+				if (!data.aborted) {
+					useCardsStore.getState().updateStatus('error')
+					useCardsStore.getState().updateCards(null)
+				}
 			} else {
 				const cards = this.prepareFetchedCards(data.cards)
-				useCardsStore.setState({ cards, status: 'success' })
+
+				useCardsStore.getState().updateStatus('success')
+				useCardsStore.getState().updateCards(cards)
 			}
 		})
 	}
 
 	prepareFetchedCards(rawCards: CardsApiTypes.Card[]) {
 		const rawCardsSorted = rawCards.sort((a, b) => {
+			const aHasTitle = a.title?.trim() !== ''
+			const bHasTitle = b.title?.trim() !== ''
+
+			if (!aHasTitle && bHasTitle) return 1 // a has empty title, b has title → a after b
+			if (aHasTitle && !bHasTitle) return -1 // a has title, b has empty title → a before b
+			if (!aHasTitle && !bHasTitle) return 0 // both have empty titles → keep relative order
+
 			const titleComparison = a.title.localeCompare(b.title)
 			if (titleComparison !== 0) {
 				return titleComparison
 			}
+
 			return a.text.length - b.text.length
 		})
 
@@ -44,9 +58,14 @@ class CardsManager {
 		return cards
 	}
 
-	useIsCardsLoading() {
+	useIsCardsLoadedSuccessfully() {
 		const cardStoreStatus = useCardsStore((s) => s.status)
-		return cardStoreStatus === 'loading'
+		return cardStoreStatus === 'success'
+	}
+
+	useIsCardsLoadedWithError() {
+		const cardStoreStatus = useCardsStore((s) => s.status)
+		return cardStoreStatus === 'error'
 	}
 }
 

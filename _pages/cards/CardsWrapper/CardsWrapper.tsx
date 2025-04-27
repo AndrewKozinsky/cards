@@ -12,7 +12,8 @@ function CardsWrapper() {
 	useFetchCards()
 
 	const cardStoreStatus = useCardsStore((s) => s.status)
-	const cardsArray = useCardsStore((s) => s.cards)
+	const cardsStoreArray = useCardsStore((s) => s.cards)
+	// console.log(cardStoreStatus)
 
 	if (cardStoreStatus === 'loading') {
 		const emptyCardsData: LoadingCardInStore[] = Array.from({ length: cardsConfig.cardsPerPage }, () => {
@@ -35,11 +36,11 @@ function CardsWrapper() {
 		)
 	}
 
-	if (cardsArray === null) {
+	if (cardsStoreArray === null) {
 		return null
 	}
 
-	const cards = cardsArray.map((cardConfig, index) => {
+	const cards = cardsStoreArray.map((cardConfig, index) => {
 		return <Card card={cardConfig} key={index}></Card>
 	})
 

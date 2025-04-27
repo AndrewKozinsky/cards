@@ -16,14 +16,24 @@ export type FullCardInStore = {
 	text: string
 }
 
+type Status = 'loading' | 'error' | 'success'
+type Cards = null | CardInStore[]
 interface CardsStore {
-	status: 'loading' | 'error' | 'success'
-	cards: null | CardInStore[]
-	// increase: (by: number) => void
+	status: Status
+	cards: Cards
+	updateStatus: (status: Status) => void
+	updateCards: (cards: Cards) => void
 }
 
 export const useCardsStore = create<CardsStore>()((set) => ({
 	status: 'loading',
 	cards: null,
-	// increase: (by) => set((state) => ({ bears: state.bears + by })),
+	updateStatus: (status: Status) =>
+		set((state) => {
+			return { status }
+		}),
+	updateCards: (cards: Cards) =>
+		set((state) => {
+			return { cards }
+		}),
 }))

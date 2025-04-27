@@ -1,4 +1,11 @@
 .button {
+	cursor: pointer;
 	padding: .5rem 1rem;
+	user-select: none;
 	border: 1px solid black;
+
+	&:disabled {
+		cursor: default;
+		opacity: .5;
+	}
 }

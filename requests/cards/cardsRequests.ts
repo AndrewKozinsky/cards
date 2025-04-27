@@ -1,13 +1,26 @@
+import axios from 'axios'
 import $api from '../api'
 import { apiUrls } from '../apiUrls'
 import { ApiInvalidData } from '../common'
 import CardsApiTypes, { GetCardsSchema } from './cardsApiTypes'
 
-const getCardsAbort = new AbortController()
+let getCardsAbort: AbortController | null = null
 
 const cardsRequests = {
 	async getCards(): Promise<CardsApiTypes.GetCards> {
 		try {
+			// Abort previous request if it exists
+			if (getCardsAbort) {
+				try {
+					getCardsAbort.abort()
+				} catch (err: unknown) {
+					console.log(err)
+				}
+			}
+
+			// Create a new AbortController for this request
+			getCardsAbort = new AbortController()
+
 			const response = await $api.get<CardsApiTypes.GetCards>(apiUrls.cards, {
 				signal: getCardsAbort.signal,
 			})
@@ -20,6 +33,13 @@ const cardsRequests = {
 
 			return response.data
 		} catch (err: unknown) {
+			if (axios.isCancel(err)) {
+				return {
+					error: 'Request was aborted',
+					aborted: true,
+				} as ApiInvalidData
+			}
+
 			let errorMessage = err instanceof Error ? err.message : 'Unknown error'
 
 			return {

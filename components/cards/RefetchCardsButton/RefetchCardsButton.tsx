@@ -5,9 +5,13 @@ import Button from '../../ui/Button/Button'
 import { useGetOnButtonClick } from './fn/onButtonClick'
 
 function RefetchCardsButton() {
-	const onButtonClick = useGetOnButtonClick()
+	const { onButtonClick, isButtonDisabled } = useGetOnButtonClick()
 
-	return <Button onClick={onButtonClick}>Refetch Cards</Button>
+	return (
+		<Button onClick={onButtonClick} disabled={isButtonDisabled}>
+			Refetch Cards
+		</Button>
+	)
 }
 
 export default RefetchCardsButton

@@ -1,8 +1,22 @@
 .cards-wrapper {
-	display: flex;
+	display: grid;
 	gap: 1.6rem;
-	flex-wrap: wrap;
-	justify-content: center;
+}
+
+@media (min-width: 768px) {
+	.cards-wrapper {
+		display: flex;
+		gap: 1.6rem;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+}
+
+@media (max-width: 768px) {
+	.card {
+		width: 100%;
+		height: auto;
+	}
 }
 
 .cards-wrapper__error {
