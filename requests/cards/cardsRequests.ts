@@ -10,12 +10,9 @@ const cardsRequests = {
 	async getCards(): Promise<CardsApiTypes.GetCards> {
 		try {
 			// Abort previous request if it exists
-			if (getCardsAbort) {
-				try {
-					getCardsAbort.abort()
-				} catch (err: unknown) {
-					console.log(err)
-				}
+			if (getCardsAbort && !getCardsAbort.signal.aborted) {
+				getCardsAbort.abort()
+				getCardsAbort = null // Clear it right away
 			}
 
 			// Create a new AbortController for this request

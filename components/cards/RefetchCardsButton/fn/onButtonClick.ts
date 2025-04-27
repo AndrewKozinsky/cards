@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import cardsManager from '../../../../_pages/cards/cardsManager'
 
 export function useGetOnButtonClick() {
-	const [isButtonDisabled, setIsButtonDisabled] = useState(false)
+	const [isButtonDisabled, setIsButtonDisabled] = useState(true)
 
 	const isCardsLoadedSuccessfully = cardsManager.useIsCardsLoadedSuccessfully()
 	const isCardsLoadedWithError = cardsManager.useIsCardsLoadedWithError()

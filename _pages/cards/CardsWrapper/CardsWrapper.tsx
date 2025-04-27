@@ -13,7 +13,6 @@ function CardsWrapper() {
 
 	const cardStoreStatus = useCardsStore((s) => s.status)
 	const cardsStoreArray = useCardsStore((s) => s.cards)
-	// console.log(cardStoreStatus)
 
 	if (cardStoreStatus === 'loading') {
 		const emptyCardsData: LoadingCardInStore[] = Array.from({ length: cardsConfig.cardsPerPage }, () => {
