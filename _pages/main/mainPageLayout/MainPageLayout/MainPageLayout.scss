@@ -1,0 +1,48 @@
+@use '../../../../styles/variables' as vars;
+
+:root {
+	// Стандартный размер шрифта в браузере 16 пикселей.
+	// Поэтому 10 пикселей будет 62.5%.
+	// Размер в процентах указывается для слабовидящих у которых в браузере стоит увеличенный шрифт.
+	font-size: 62.5%;
+}
+
+*:not(svg, g, path) {
+	all: unset;
+	display: revert;
+    list-style: none;
+
+	&:focus {
+		outline: 2px solid blue;
+	}
+}
+
+html, body {
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	font-family: 'Arial', sans-serif;
+	font-size: 1.6rem;
+	line-height: 2.2rem;
+	font-weight: 300;
+	color: vars.$textColor;
+	min-height: 100dvh;
+	padding: 2rem;
+	margin: 0 auto;
+	box-sizing: border-box;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+a {
+	color: blue;
+	border-bottom: 1px solid blue;
+	cursor: pointer;
+}
+
+.page-content {
+	flex-grow: 1;
+}
